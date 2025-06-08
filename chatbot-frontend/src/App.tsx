@@ -102,8 +102,8 @@ function App() {
 
   return (
     <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#fff' }}>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '32px 0 24px 0', background: 'transparent' }}>
-        <img src={logo} alt="Logo" style={{ width: '563px', maxWidth: '563px', height: 'auto', display: 'block', margin: '0 auto', boxSizing: 'border-box', minWidth: '0', minHeight: '0', paddingBottom: '17.5px' }} />
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px 0 24px 0', background: 'transparent' }}>
+        <img src={logo} alt="Logo" style={{ width: '563px', maxWidth: '563px', height: 'auto', display: 'block', margin: '0 auto', boxSizing: 'border-box', minWidth: '0', minHeight: '0' }} />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '48px' }}>
@@ -138,25 +138,72 @@ function App() {
               </button>
             </form>
           </div>
-          {/* Reserve space for the button to prevent layout shift */}
-          <div style={{ height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <button 
+          {/* Reserve space for the copy conversation action to prevent layout shift */}
+          <div style={{ height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
+            <span
               onClick={copyConversation}
               style={{
                 marginTop: '16px',
-                backgroundColor: '#6c93d3',
-                color: 'white',
+                color: '#fff',
+                fontWeight: 'bold',
+                fontSize: '14px',
+                cursor: 'pointer',
+                transition: 'color 0.2s',
+                textDecoration: 'none',
                 border: 'none',
+                background: '#6c93d3',
                 borderRadius: '8px',
                 padding: '10px 20px',
-                cursor: 'pointer',
-                fontSize: '14px',
-                fontWeight: 'bold',
-                transition: 'background-color 0.2s ease'
+                outline: 'none',
+                userSelect: 'none',
+                display: 'inline-block',
+                boxShadow: 'none',
               }}
+              onMouseOver={e => {
+                e.currentTarget.style.color = '#111';
+              }}
+              onMouseOut={e => {
+                e.currentTarget.style.color = '#fff';
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Zkopírovat konverzaci"
             >
               Zkopírovat konverzaci
-            </button>
+            </span>
+            <a
+              href="https://docs.google.com/document/d/1QdOOadZ17qf4tJnfS6OGY1-Dcrispi0cEL-N6_3B5r0/edit?tab=t.0"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                marginTop: '16px',
+                color: '#fff',
+                fontWeight: 'bold',
+                fontSize: '14px',
+                cursor: 'pointer',
+                transition: 'color 0.2s',
+                textDecoration: 'none',
+                border: 'none',
+                background: '#6c93d3',
+                borderRadius: '8px',
+                padding: '10px 20px',
+                outline: 'none',
+                userSelect: 'none',
+                display: 'inline-block',
+                boxShadow: 'none',
+              }}
+              onMouseOver={e => {
+                e.currentTarget.style.color = '#111';
+              }}
+              onMouseOut={e => {
+                e.currentTarget.style.color = '#fff';
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label="Testovací dokument"
+            >
+              Testovací dokument
+            </a>
           </div>
         </div>
       </div>
@@ -164,7 +211,6 @@ function App() {
         width: '100vw',
         height: '40px',
         background: '#6c93d3',
-        color: '#fff',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -177,7 +223,9 @@ function App() {
         margin: 0,
         padding: 0
       }}>
-        Testovací verze. Děkujeme za pochopení!
+        <span style={{ fontWeight: 'bold', color: '#fff' }}>
+          Testovací verze. Děkujeme za pochopení!
+        </span>
       </footer>
     </div>
   );

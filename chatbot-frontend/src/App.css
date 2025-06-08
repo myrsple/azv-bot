@@ -186,3 +186,33 @@ img[alt="Icon"] {
   box-shadow: none !important;
   border-radius: 0 !important;
 }
+
+.bio-text a {
+  color: #6c93d3;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: bold;
+}
+.bio-text a:hover {
+  color: #111;
+  text-decoration: none;
+}
+
+.input-form button {
+  transition: background-color 0.2s, color 0.2s;
+  background-color: #6c93d3;
+  color: #fff;
+}
+.input-form button svg path {
+  transition: stroke 0.2s;
+  stroke: #fff;
+}
+.input-form button:hover:not(:disabled),
+.input-form button:focus:not(:disabled) {
+  background-color: #6c93d3;
+  color: #111;
+}
+.input-form button:hover:not(:disabled) svg path,
+.input-form button:focus:not(:disabled) svg path {
+  stroke: #111;
+}
