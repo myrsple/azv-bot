@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import logo from './assets/logo.jpeg';
+import logo from './assets/logo.svg';
 import icon from './assets/icon.png';
 
 interface Message {
@@ -101,9 +101,9 @@ function App() {
   };
 
   return (
-    <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#F4F4F4' }}>
+    <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#fff' }}>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '32px 0 24px 0', background: 'transparent' }}>
-        <img src={logo} alt="Logo" style={{ maxWidth: '660px', height: 'auto', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
+        <img src={logo} alt="Logo" style={{ width: '704px', maxWidth: '704px', height: 'auto', display: 'block', margin: '0 auto', boxSizing: 'border-box', minWidth: '0', minHeight: '0', paddingBottom: '35px' }} />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '48px' }}>
@@ -159,6 +159,25 @@ function App() {
           )}
         </div>
       </div>
+      <footer style={{
+        width: '100vw',
+        height: '40px',
+        background: '#6c93d3',
+        color: '#fff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        fontSize: '1.15rem',
+        fontWeight: 'bold',
+        zIndex: 1000,
+        margin: 0,
+        padding: 0
+      }}>
+        Testovací verze. Děkujeme za pochopení!
+      </footer>
     </div>
   );
 }
