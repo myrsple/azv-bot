@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import logo from './assets/logo.svg';
 import icon from './assets/icon.png';
@@ -8,11 +8,39 @@ interface Message {
   content: string;
 }
 
+// Add this function before the App component
+const cleanMessageContent = (content: string): string => {
+  // Remove file references in the format 【number:number†filename.txt】
+  return content.replace(/【\d+:\d+†[^】]+】/g, '');
+};
+
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [threadId, setThreadId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  useEffect(() => {
+    // Focus input when component mounts
+    inputRef.current?.focus();
+  }, []);
+
+  useEffect(() => {
+    // Focus input when loading state changes from true to false (bot finished responding)
+    if (!isLoading) {
+      inputRef.current?.focus();
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     // Initialize thread when component mounts
@@ -76,7 +104,7 @@ function App() {
 
       if (latestAssistantMessage) {
         const content = latestAssistantMessage.content[0]?.text?.value || '';
-        setMessages(prev => [...prev, { role: 'assistant', content }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: cleanMessageContent(content) }]);
       }
     } catch (error) {
       console.error('Error sending message:', error);
@@ -117,13 +145,15 @@ function App() {
             <div className="messages">
               {messages.map((message, index) => (
                 <div key={index} className={`message ${message.role}`}>
-                  {message.content}
+                  {cleanMessageContent(message.content)}
                 </div>
               ))}
               {isLoading && <div className="message assistant"><span className="dot-typing"><span></span></span></div>}
+              <div ref={messagesEndRef} />
             </div>
             <form onSubmit={handleSubmit} className="input-form">
               <input
+                ref={inputRef}
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
