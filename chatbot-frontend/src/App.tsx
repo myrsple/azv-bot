@@ -12,20 +12,12 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [threadId, setThreadId] = useState<string | null>(null);
-  const [assistantId, setAssistantId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Initialize assistant and thread when component mounts
+    // Initialize thread when component mounts
     const initializeChat = async () => {
       try {
-        // Create assistant
-        const assistantResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/assistant`, {
-          method: 'POST',
-        });
-        const assistant = await assistantResponse.json();
-        setAssistantId(assistant.id);
-
         // Create thread
         const threadResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/thread`, {
           method: 'POST',
@@ -42,7 +34,7 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || !threadId || !assistantId) return;
+    if (!input.trim() || !threadId) return;
 
     const userMessage = input.trim();
     setInput('');
@@ -61,7 +53,6 @@ function App() {
       const runResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/thread/${threadId}/run`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ assistantId }),
       });
       const run = await runResponse.json();
 
