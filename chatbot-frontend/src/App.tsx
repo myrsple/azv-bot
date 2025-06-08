@@ -103,7 +103,7 @@ function App() {
   return (
     <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#fff' }}>
       <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '32px 0 24px 0', background: 'transparent' }}>
-        <img src={logo} alt="Logo" style={{ width: '704px', maxWidth: '704px', height: 'auto', display: 'block', margin: '0 auto', boxSizing: 'border-box', minWidth: '0', minHeight: '0', paddingBottom: '35px' }} />
+        <img src={logo} alt="Logo" style={{ width: '563px', maxWidth: '563px', height: 'auto', display: 'block', margin: '0 auto', boxSizing: 'border-box', minWidth: '0', minHeight: '0', paddingBottom: '17.5px' }} />
       </div>
       <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '48px' }}>
@@ -138,7 +138,8 @@ function App() {
               </button>
             </form>
           </div>
-          {messages.length > 0 && (
+          {/* Reserve space for the button to prevent layout shift */}
+          <div style={{ height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <button 
               onClick={copyConversation}
               style={{
@@ -150,13 +151,13 @@ function App() {
                 padding: '10px 20px',
                 cursor: 'pointer',
                 fontSize: '14px',
-                fontWeight: '500',
+                fontWeight: 'bold',
                 transition: 'background-color 0.2s ease'
               }}
             >
               Zkopírovat konverzaci
             </button>
-          )}
+          </div>
         </div>
       </div>
       <footer style={{
