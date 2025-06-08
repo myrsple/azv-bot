@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import logo from './assets/logo.svg';
+import logoDark from './assets/logo-w.svg';
 import icon from './assets/icon.png';
 
 interface Message {
@@ -19,12 +20,25 @@ function App() {
   const [input, setInput] = useState('');
   const [threadId, setThreadId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     document.title = "Vědátor – AZV ČR";
+    // Check system preference for dark mode
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setIsDarkMode(prefersDark);
   }, []);
+
+  useEffect(() => {
+    // Update body class when dark mode changes
+    document.body.classList.toggle('dark-mode', isDarkMode);
+  }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -133,18 +147,25 @@ function App() {
   };
 
   return (
-    <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', background: '#fff' }}>
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '16px 0 24px 0', background: 'transparent' }}>
-        <img src={logo} alt="Logo" style={{ width: '563px', maxWidth: '563px', height: 'auto', display: 'block', margin: '0 auto', boxSizing: 'border-box', minWidth: '0', minHeight: '0' }} />
+    <div className={`app-container ${isDarkMode ? 'dark-mode' : ''}`}>
+      <div className="header">
+        <img src={isDarkMode ? logoDark : logo} alt="Logo" className="logo" />
+        <button 
+          onClick={toggleDarkMode} 
+          className="dark-mode-toggle"
+          aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+        >
+          {isDarkMode ? '☀️' : '🌙'}
+        </button>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '48px' }}>
-          <img src={icon} alt="Icon" style={{ maxWidth: '360px', height: '360px', borderRadius: '18px', boxShadow: '0 2px 8px rgba(0,0,0,0.10)', objectFit: 'contain' }} />
-          <div className="bio-text" style={{ color: '#232323', margin: '24px 0 0 0', fontSize: '1.15rem', textAlign: 'left', maxWidth: '320px' }}>
-            <span style={{ fontWeight: 'bold' }}>Vědátor</span> vám pomůže zorientovat se v grantových výzvách, procesu podávání a hodnocení projektů i dalších informacích o AZV ČR. Může se výjimečně zmýlit – důležité informace si vždy ověřte na našem<a href="https://azvcr.cz"> oficiálním webu</a>. 
+      <div className="main-content">
+        <div className="bio-section">
+          <img src={icon} alt="Icon" className="bio-image" />
+          <div className="bio-text">
+            <span className="bold">Vědátor</span> vám pomůže zorientovat se v grantových výzvách, procesu podávání a hodnocení projektů i dalších informacích o AZV ČR. Může se výjimečně zmýlit – důležité informace si vždy ověřte na našem<a href="https://azvcr.cz"> oficiálním webu</a>. 
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div className="chat-section">
           <div className="chat-container">
             <div className="messages">
               {messages.map((message, index) => (
@@ -166,72 +187,27 @@ function App() {
               />
               <button type="submit" disabled={isLoading} aria-label="Send">
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 11H18" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 5L18 11L12 17" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M4 11H18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 5L18 11L12 17" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
             </form>
           </div>
-          {/* Reserve space for the copy conversation action to prevent layout shift */}
-          <div style={{ height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
-            <span
+          <div className="action-buttons">
+            <button
               onClick={copyConversation}
-              style={{
-                marginTop: '16px',
-                color: '#fff',
-                fontWeight: 'bold',
-                fontSize: '14px',
-                cursor: 'pointer',
-                transition: 'color 0.2s',
-                textDecoration: 'none',
-                border: 'none',
-                background: '#6c93d3',
-                borderRadius: '8px',
-                padding: '10px 20px',
-                outline: 'none',
-                userSelect: 'none',
-                display: 'inline-block',
-                boxShadow: 'none',
-              }}
-              onMouseOver={e => {
-                e.currentTarget.style.color = '#111';
-              }}
-              onMouseOut={e => {
-                e.currentTarget.style.color = '#fff';
-              }}
+              className="action-button"
               tabIndex={0}
               role="button"
               aria-label="Zkopírovat konverzaci"
             >
               Zkopírovat konverzaci
-            </span>
+            </button>
             <a
               href="https://docs.google.com/document/d/1QdOOadZ17qf4tJnfS6OGY1-Dcrispi0cEL-N6_3B5r0/edit?tab=t.0"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                marginTop: '16px',
-                color: '#fff',
-                fontWeight: 'bold',
-                fontSize: '14px',
-                cursor: 'pointer',
-                transition: 'color 0.2s',
-                textDecoration: 'none',
-                border: 'none',
-                background: '#6c93d3',
-                borderRadius: '8px',
-                padding: '10px 20px',
-                outline: 'none',
-                userSelect: 'none',
-                display: 'inline-block',
-                boxShadow: 'none',
-              }}
-              onMouseOver={e => {
-                e.currentTarget.style.color = '#111';
-              }}
-              onMouseOut={e => {
-                e.currentTarget.style.color = '#fff';
-              }}
+              className="action-button"
               tabIndex={0}
               role="button"
               aria-label="Testovací dokument"
@@ -241,25 +217,8 @@ function App() {
           </div>
         </div>
       </div>
-      <footer style={{
-        width: '100vw',
-        height: '40px',
-        background: '#6c93d3',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'fixed',
-        left: 0,
-        bottom: 0,
-        fontSize: '1.15rem',
-        fontWeight: 'bold',
-        zIndex: 1000,
-        margin: 0,
-        padding: 0
-      }}>
-        <span style={{ fontWeight: 'bold', color: '#fff' }}>
-          Testovací verze. Děkujeme za pochopení!
-        </span>
+      <footer>
+        <span>Testovací verze. Děkujeme za pochopení!</span>
       </footer>
     </div>
   );
