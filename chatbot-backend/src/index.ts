@@ -22,21 +22,6 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Create a new assistant
-app.post('/api/assistant', async (req, res) => {
-  try {
-    const assistant = await openai.beta.assistants.create({
-      name: "Knowledge Base Assistant",
-      instructions: "You are a helpful assistant that provides information from the knowledge base.",
-      model: "gpt-4-turbo-preview",
-    });
-    res.json(assistant);
-  } catch (error) {
-    console.error('Error creating assistant:', error);
-    res.status(500).json({ error: 'Failed to create assistant' });
-  }
-});
-
 // Create a new thread
 app.post('/api/thread', async (req, res) => {
   try {
