@@ -75,8 +75,17 @@ function App() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Only scroll to bottom on new assistant messages, and only on mobile
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      const isMobile = window.innerWidth <= 500;
+      
+      // Only scroll if the last message is from assistant and we're on mobile
+      if (lastMessage.role === 'assistant' && isMobile) {
+        scrollToBottom();
+      }
+    }
   }, [messages]);
 
   useEffect(() => {
