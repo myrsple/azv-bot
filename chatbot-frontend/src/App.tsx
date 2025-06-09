@@ -149,13 +149,21 @@ function App() {
   return (
     <div className={`app-container ${isDarkMode ? 'dark-mode' : ''}`}>
       <div className="header">
-        <img src={isDarkMode ? logoDark : logo} alt="Logo" className="logo" />
+        <a href="https://azvcr.cz" target="_blank" rel="noopener noreferrer" className="logo-link">
+          <img src={isDarkMode ? logoDark : logo} alt="Logo" className="logo" />
+        </a>
         <button 
           onClick={toggleDarkMode} 
           className="dark-mode-toggle"
           aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
         >
-          {isDarkMode ? '☀️' : '🌙'}
+          <div className="toggle-track">
+            <div className={`toggle-thumb ${isDarkMode ? 'dark' : 'light'}`}>
+              <span className="toggle-icon">
+                {isDarkMode ? '🌙' : '☀️'}
+              </span>
+            </div>
+          </div>
         </button>
       </div>
       <div className="main-content">
