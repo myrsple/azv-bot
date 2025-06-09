@@ -517,9 +517,9 @@ img[alt="Icon"] {
   }
 
   .chat-container {
-    width: 390px;
-    max-width: 390px;
-    min-width: 390px;
+    width: 351px;
+    max-width: 351px;
+    min-width: 351px;
     height: 475px;
     margin: 0;
     box-sizing: border-box;
