@@ -15,6 +15,37 @@ const cleanMessageContent = (content: string): string => {
   return content.replace(/【\d+:\d+†[^】]+】/g, '');
 };
 
+// Function to convert URLs to clickable links
+const linkifyText = (text: string): React.ReactElement => {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(urlRegex);
+  
+  return (
+    <>
+      {parts.map((part, index) => {
+        if (urlRegex.test(part)) {
+          return (
+            <a 
+              key={index} 
+              href={part} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ 
+                color: '#6c93d3', 
+                textDecoration: 'none',
+                fontWeight: 'bold'
+              }}
+            >
+              {part}
+            </a>
+          );
+        }
+        return part;
+      })}
+    </>
+  );
+};
+
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -178,7 +209,10 @@ function App() {
             <div className="messages">
               {messages.map((message, index) => (
                 <div key={index} className={`message ${message.role}`}>
-                  {cleanMessageContent(message.content)}
+                  {message.role === 'assistant' 
+                    ? linkifyText(cleanMessageContent(message.content))
+                    : cleanMessageContent(message.content)
+                  }
                 </div>
               ))}
               {isLoading && <div className="message assistant"><span className="dot-typing"><span></span></span></div>}
@@ -222,6 +256,21 @@ function App() {
             >
               Testovací dokument
             </a>
+          </div>
+          <div className="mobile-theme-toggle">
+            <button 
+              onClick={toggleDarkMode} 
+              className="dark-mode-toggle"
+              aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              <div className="toggle-track">
+                <div className={`toggle-thumb ${isDarkMode ? 'dark' : 'light'}`}>
+                  <span className="toggle-icon">
+                    {isDarkMode ? '🌙' : '☀️'}
+                  </span>
+                </div>
+              </div>
+            </button>
           </div>
         </div>
       </div>

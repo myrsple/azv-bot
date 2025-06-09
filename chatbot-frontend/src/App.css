@@ -154,6 +154,10 @@ body, #root {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
+.mobile-theme-toggle {
+  display: none; /* Hidden on desktop */
+}
+
 .main-content {
   display: flex;
   flex-direction: row;
@@ -433,4 +437,157 @@ img[alt="Icon"] {
 .input-form button:hover:not(:disabled) svg path,
 .input-form button:focus:not(:disabled) svg path {
   stroke: #fff;
+}
+
+/* Mobile responsive styles for iPhone 16 Pro and smaller */
+@media (max-width: 430px) {
+  .app-container {
+    padding: 0;
+    min-height: 100vh;
+    padding-bottom: 60px; /* Account for footer */
+    overflow-x: hidden;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header {
+    padding: 20px 0 24px 0;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo-link {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .logo {
+    width: 293px;
+    max-width: 90vw;
+    height: auto;
+    display: block;
+    padding-top: 500px;
+  }
+
+  .dark-mode-toggle {
+    display: none; /* Hide for now, will show under buttons */
+  }
+
+  .main-content {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    gap: 20px;
+    width: 100%;
+    max-width: 430px;
+    margin: 0;
+  }
+
+  .bio-section {
+    margin-right: 0;
+    margin-top: 0;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .bio-image {
+    max-width: 240px;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 18px;
+  }
+
+  .bio-text {
+    max-width: 90%;
+    text-align: center;
+    font-size: 0.95rem;
+    margin: 16px auto 0 auto;
+    line-height: 1.4;
+    padding: 0 20px;
+  }
+
+  .chat-container {
+    width: 390px;
+    max-width: 390px;
+    min-width: 390px;
+    height: 475px;
+    margin: 0;
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+
+  .messages {
+    padding: 16px 14px 8px 14px;
+    scroll-behavior: smooth;
+    overflow-anchor: none;
+  }
+
+  .message {
+    max-width: 85%;
+    word-wrap: break-word;
+  }
+
+  .message.user {
+    max-width: 80%;
+  }
+
+  .message.assistant {
+    max-width: 85%;
+  }
+
+  .input-form {
+    padding: 12px 14px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+    width: 273px;
+    max-width: 273px;
+    min-width: 273px;
+    height: auto;
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+
+  .action-button {
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    display: block;
+  }
+
+  .mobile-theme-toggle {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .mobile-theme-toggle .dark-mode-toggle {
+    display: block;
+    position: static;
+    right: auto;
+    top: auto;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+  }
 }
